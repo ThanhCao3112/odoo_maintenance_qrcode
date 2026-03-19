@@ -18,6 +18,7 @@ Features:
     "maintainer": "thanhcao",
     "website": "https://github.com/ThanhCao3112/odoo_maintenance_qrcode",
     "license": "LGPL-3",
+    "images": ["static/description/banner.png"],
     "depends": ["maintenance"],
     "data": [
         "security/ir.model.access.csv",
