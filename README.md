@@ -1,0 +1,1 @@
+# odoo_maintenance_qrcode
