@@ -16,7 +16,7 @@ Features:
     "category": "Supply Chain/Maintenance",
     "author": "thanhcao",
     "maintainer": "thanhcao",
-    "website": "https://github.com",
+    "website": "https://github.com/ThanhCao3112/odoo_maintenance_qrcode",
     "license": "LGPL-3",
     "depends": ["maintenance"],
     "data": [
