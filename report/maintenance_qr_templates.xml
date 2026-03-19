@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_simple_qr_label_cell">
+        <t t-set="qr_size" t-value="qr_img_style"/>
+        <t t-set="table_style" t-value="label_style + table_style"/>
+        <td t-att-style="make_invisible and 'visibility:hidden;'">
+            <div class="o_label_full o_label_property_sticker" t-attf-class="o_label_{{ label_class }}" t-att-style="table_style">
+                <div class="o_label_red_band" t-att-style="'background-color: ' + (header_color or '#6b4096') + ';'">
+                    <div class="o_label_property_text" t-att-style="'font-size:%s;line-height:1.0;' % property_text_size">PROPERTY OF</div>
+                    <div class="o_label_company_name" t-att-style="'font-size:%s;line-height:1.0;' % company_text_size" t-out="env.company.name"/>
+                </div>
+                <div class="o_label_white_section">
+                    <div class="text-center o_label_barcode_container">
+                        <div t-out="qr_value" t-options="{'widget': 'barcode', 'symbology': 'QR', 'width': qr_px, 'height': qr_px, 'img_style': qr_size}"/>
+                        <div class="o_label_asset_code" t-att-style="'font-size:%s;line-height:1.0;' % code_text_size" t-out="equipment.x_equipment_code or equipment.serial_no or 'Equipment'"/>
+                        <div class="o_label_equipment_name">
+                            <span t-att-style="'font-size:%s;line-height:1.0;' % name_text_size" t-out="equipment.x_qr_name_display or equipment.name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </template>
+
+    <template id="report_maintenance_equipment_qr" t-name="maintenance_qrcode.report_maintenance_equipment_qr">
+        <t t-call="web.basic_layout">
+            <t t-call="maintenance_qrcode.report_maintenance_equipment_qr_document"/>
+        </t>
+    </template>
+
+    <template id="report_maintenance_equipment_qr_document">
+        <t t-call="web.html_container">
+            <t t-set="padding_page" t-value="'padding: 14mm 3mm'"/>
+            <t t-set="table_style" t-value="''"/>
+            <t t-set="current_quantity" t-value="0"/>
+            <t t-set="current_data" t-value="False"/>
+            <t t-set="label_class" t-value="'custom'"/>
+            <t t-set="label_style" t-value="'width:68mm;height:34mm;'"/>
+            <t t-set="qr_img_style" t-value="'width:24mm;height:24mm'"/>
+            <t t-set="qr_px" t-value="280"/>
+            <t t-set="property_text_size" t-value="'8px'"/>
+            <t t-set="company_text_size" t-value="'12px'"/>
+            <t t-set="code_text_size" t-value="'12px'"/>
+            <t t-set="name_text_size" t-value="'11px'"/>
+
+            <t t-if="columns == 2 and rows == 7">
+                <t t-set="padding_page" t-value="'padding: 14mm 3mm'"/>
+                <t t-set="label_style" t-value="'width:97mm;height:37.1mm;'"/>
+                <t t-set="qr_img_style" t-value="'width:28mm;height:28mm'"/>
+                <t t-set="qr_px" t-value="320"/>
+                <t t-set="label_class" t-value="'2x7'"/>
+                <t t-set="property_text_size" t-value="'7px'"/>
+                <t t-set="company_text_size" t-value="'11px'"/>
+                <t t-set="code_text_size" t-value="'10px'"/>
+                <t t-set="name_text_size" t-value="'9px'"/>
+            </t>
+            <t t-if="columns == 4 and rows == 7">
+                <t t-set="padding_page" t-value="'padding: 14mm 3mm'"/>
+                <t t-set="label_style" t-value="'width:47mm;height:37.1mm;'"/>
+                <t t-set="qr_img_style" t-value="'width:22mm;height:22mm'"/>
+                <t t-set="qr_px" t-value="260"/>
+                <t t-set="label_class" t-value="'4x7'"/>
+                <t t-set="property_text_size" t-value="'6px'"/>
+                <t t-set="company_text_size" t-value="'9px'"/>
+                <t t-set="code_text_size" t-value="'8px'"/>
+                <t t-set="name_text_size" t-value="'7px'"/>
+            </t>
+            <t t-if="columns != 2 and columns != 4">
+                <t t-set="padding_page" t-value="'padding: 14mm 3mm'"/>
+                <t t-set="label_style" t-value="'width:55mm;height:26mm;'"/>
+                <t t-set="qr_img_style" t-value="'width:22mm;height:22mm'"/>
+                <t t-set="qr_px" t-value="260"/>
+                <t t-set="label_class" t-value="'custom'"/>
+                <t t-set="property_text_size" t-value="'6px'"/>
+                <t t-set="company_text_size" t-value="'9px'"/>
+                <t t-set="code_text_size" t-value="'8px'"/>
+                <t t-set="name_text_size" t-value="'7px'"/>
+            </t>
+
+            <div class="page" style="padding: 0; margin: 0;">
+                <style>
+                    @font-face {
+                        font-family: 'SG3DReportSans';
+                        src: local('DejaVu Sans'), local('Noto Sans'), local('Arial Unicode MS');
+                        font-weight: normal;
+                        font-style: normal;
+                    }
+                    @font-face {
+                        font-family: 'SG3DReportSans';
+                        src: local('DejaVu Sans Bold'), local('Noto Sans Bold'), local('Arial Unicode MS Bold');
+                        font-weight: bold;
+                        font-style: normal;
+                    }
+                    body {
+                        font-family: "SG3DReportSans", "DejaVu Sans", "Noto Sans", "Arial Unicode MS", Arial, sans-serif;
+                    }
+                    .o_label_sheet {
+                        margin-left: -4mm;
+                        margin-right: -4mm;
+                        overflow: hidden;
+                        width: 210mm;
+                        height: 297mm;
+                        page-break-before: always;
+                    }
+                    .o_label_full {
+                        overflow: hidden;
+                        padding: 0;
+                        margin: auto;
+                    }
+                    .o_label_property_sticker {
+                        border-radius: 4mm;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        border: 1px solid #e0e0e0;
+                        background: #fff;
+                        font-family: "SG3DReportSans", "DejaVu Sans", "Noto Sans", "Arial Unicode MS", Arial, sans-serif;
+                    }
+                    .o_label_red_band {
+                        color: white;
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-bottom: 1px solid white;
+                        flex-shrink: 0;
+                    }
+                    .o_label_property_text {
+                        font-weight: 600;
+                        letter-spacing: 0.5px;
+                        text-transform: uppercase;
+                        line-height: 1.1;
+                    }
+                    .o_label_company_name {
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        line-height: 1.1;
+                        word-wrap: break-word;
+                        max-width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .o_label_white_section {
+                        background-color: white;
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 0;
+                    }
+                    .o_label_barcode_container {
+                        width: 100%;
+                        text-align: center;
+                    }
+                    .o_label_asset_code {
+                        font-weight: 600;
+                        color: #000;
+                        text-align: center;
+                        letter-spacing: 0.5px;
+                        font-family: 'DejaVu Sans Mono', monospace;
+                        margin-top: 0.5mm;
+                    }
+                    .o_label_equipment_name {
+                        margin-top: 0.2mm;
+                        color: #222;
+                        text-align: center;
+                        word-wrap: break-word;
+                        line-height: 1.1;
+                    }
+                    .o_label_property_sticker.o_label_2x7 .o_label_red_band {
+                        padding: 1.5mm 3mm;
+                        min-height: 22%;
+                        max-height: 24%;
+                    }
+                    .o_label_property_sticker.o_label_2x7 .o_label_property_text {
+                        font-size: 0.52em;
+                        margin-bottom: 0.5mm;
+                    }
+                    .o_label_property_sticker.o_label_2x7 .o_label_company_name {
+                        font-size: 0.7em;
+                        max-height: 2.5em;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                    }
+                    .o_label_property_sticker.o_label_2x7 .o_label_white_section {
+                        padding: 2.5mm 3mm;
+                    }
+                    .o_label_property_sticker.o_label_2x7 .o_label_asset_code {
+                        font-size: 0.8em;
+                    }
+                    .o_label_property_sticker.o_label_2x7 .o_label_equipment_name {
+                        font-size: 0.7em;
+                        margin-top: 0.35mm;
+                    }
+                    .o_label_property_sticker.o_label_4x7 .o_label_red_band {
+                        padding: 1.2mm 2mm;
+                        min-height: 20%;
+                    }
+                    .o_label_property_sticker.o_label_4x7 .o_label_property_text {
+                        font-size: 0.5em;
+                    }
+                    .o_label_property_sticker.o_label_4x7 .o_label_company_name {
+                        font-size: 0.65em;
+                    }
+                    .o_label_property_sticker.o_label_4x7 .o_label_white_section {
+                        padding: 2mm;
+                    }
+                    .o_label_property_sticker.o_label_4x7 .o_label_asset_code {
+                        font-size: 0.7em;
+                    }
+                    .o_label_property_sticker.o_label_4x7 .o_label_equipment_name {
+                        font-size: 0.6em;
+                    }
+                </style>
+
+                <t t-if="columns and rows">
+                    <t t-foreach="range(page_numbers)" t-as="page">
+                        <div class="o_label_sheet" t-att-style="padding_page">
+                            <table class="my-0 table table-sm table-borderless" style="table-layout: fixed; width: 100%;">
+                                <t t-foreach="range(rows)" t-as="row">
+                                    <tr>
+                                        <t t-foreach="range(columns)" t-as="column">
+                                            <t t-if="not current_quantity and quantity and not (current_data and current_data[1])">
+                                                <t t-set="current_data" t-value="quantity.popitem()"/>
+                                                <t t-set="equipment" t-value="current_data[0]"/>
+                                                <t t-set="qr_and_qty" t-value="current_data[1].pop()"/>
+                                                <t t-set="qr_value" t-value="qr_and_qty[0]"/>
+                                                <t t-set="current_quantity" t-value="qr_and_qty[1]"/>
+                                            </t>
+                                            <t t-if="current_quantity">
+                                                <t t-set="make_invisible" t-value="False"/>
+                                                <t t-set="current_quantity" t-value="current_quantity - 1"/>
+                                            </t>
+                                            <t t-elif="current_data and current_data[1]">
+                                                <t t-set="qr_and_qty" t-value="current_data[1].pop()"/>
+                                                <t t-set="qr_value" t-value="qr_and_qty[0]"/>
+                                                <t t-set="current_quantity" t-value="qr_and_qty[1] - 1"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-set="make_invisible" t-value="True"/>
+                                            </t>
+                                            <t t-call="maintenance_qrcode.report_simple_qr_label_cell"/>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

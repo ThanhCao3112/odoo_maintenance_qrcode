@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_maintenance_qr_print_wizard_form" model="ir.ui.view">
+        <field name="name">maintenance.qr.print.wizard.form</field>
+        <field name="model">maintenance.qr.print.wizard</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="equipment_ids" widget="many2many_tags" string="Equipment" required="True"/>
+                        <field name="copies" string="Quantity"/>
+                        <field name="size" widget="radio" string="Format"/>
+                    </group>
+                    <group>
+                        <field name="custom_columns" invisible="size != 'custom'"/>
+                        <field name="custom_rows" invisible="size != 'custom'"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="header_color" widget="color" string="Label Header Color"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print" string="Confirm" type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_maintenance_qr_print_wizard" model="ir.actions.act_window">
+        <field name="name">Equipment QR Label</field>
+        <field name="res_model">maintenance.qr.print.wizard</field>
+        <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_maintenance_qr_print_wizard_form')})]" />
+        <field name="target">new</field>
+    </record>
+
+</odoo>

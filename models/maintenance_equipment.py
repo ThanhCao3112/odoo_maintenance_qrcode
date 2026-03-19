@@ -9,7 +9,7 @@ from odoo.exceptions import AccessError, UserError
 class MaintenanceEquipment(models.Model):
     _inherit = "maintenance.equipment"
 
-    _MOJIBAKE_MARKERS = ("Ã", "Â", "Ä", "áº", "á»", "Ä‘")
+    _MOJIBAKE_MARKERS = ("Ã", "Â", "Ä", "áº", "á»", "Ä‘", "â", "�")
 
     x_equipment_code = fields.Char(
         string="Equipment Code",
@@ -32,6 +32,16 @@ class MaintenanceEquipment(models.Model):
         string="QR Preview",
         compute="_compute_qr_fields",
         sanitize=False,
+    )
+    x_qr_name_display = fields.Char(
+        string="QR Name Display",
+        compute="_compute_qr_name_display",
+        help="Equipment name normalized for QR label printing.",
+    )
+    x_qr_name_entities = fields.Char(
+        string="QR Name Entities",
+        compute="_compute_qr_name_display",
+        help="Equipment name converted to HTML entities for safe PDF rendering.",
     )
 
     _x_equipment_code = models.Constraint(
@@ -60,6 +70,13 @@ class MaintenanceEquipment(models.Model):
                 f'<img src="{qr_url}" alt="QR Code" style="max-width:220px;max-height:220px;"/>'
                 "</div>"
             )
+
+    @api.depends("name")
+    def _compute_qr_name_display(self):
+        for record in self:
+            normalized = record._repair_mojibake(record.name) or record.name or ""
+            record.x_qr_name_display = normalized
+            record.x_qr_name_entities = ''.join(f'&#{ord(ch)};' for ch in normalized)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -104,15 +121,29 @@ class MaintenanceEquipment(models.Model):
             return text
         if not any(marker in text for marker in self._MOJIBAKE_MARKERS):
             return text
+        for source_encoding in ("cp1252", "latin1"):
+            try:
+                repaired = text.encode(source_encoding, errors="ignore").decode("utf-8", errors="ignore")
+                if repaired and not any(marker in repaired for marker in self._MOJIBAKE_MARKERS):
+                    return repaired
+            except UnicodeError:
+                continue
         try:
-            repaired = text.encode("latin1").decode("utf-8")
-            return repaired or text
+            repaired = text.encode("latin1", errors="ignore").decode("utf-8", errors="ignore")
+            if repaired:
+                return repaired
         except UnicodeError:
-            return text
+            pass
+        return text
 
     def _qr_display_text(self, text):
         self.ensure_one()
         return self._repair_mojibake(text)
+
+    def _qr_display_html_entities(self, text):
+        self.ensure_one()
+        display_text = self._repair_mojibake(text) or ""
+        return "".join(f"&#{ord(ch)};" for ch in display_text)
 
     def _qr_display_code(self):
         self.ensure_one()

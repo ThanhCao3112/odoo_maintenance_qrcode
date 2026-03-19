@@ -29,12 +29,4 @@
         }</field>
     </record>
 
-    <record id="action_open_maintenance_qr_print_wizard" model="ir.actions.server">
-        <field name="name">Print QR Code</field>
-        <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
-        <field name="binding_model_id" ref="maintenance.model_maintenance_equipment"/>
-        <field name="binding_view_types">list,form</field>
-        <field name="state">code</field>
-        <field name="code">action = records.action_open_qr_print_wizard()</field>
-    </record>
 </odoo>

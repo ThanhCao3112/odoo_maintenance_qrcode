@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+{
+    "name": "Maintenance QR Code",
+    "summary": "Generate and print QR labels for maintenance equipment",
+    "description": """
+Maintenance QR Code
+===================
+
+Features:
+- Auto/manual equipment code for maintenance equipment.
+- QR payload and QR preview on equipment form.
+- Print QR labels from equipment form/list header button.
+- Label layouts: Dymo, 2x7, 4x7, and custom columns/rows.
+""",
+    "version": "19.0.1.0.0",
+    "category": "Supply Chain/Maintenance",
+    "author": "thanhcao",
+    "maintainer": "thanhcao",
+    "website": "https://github.com/ThanhCao3112/odoo_maintenance_qrcode",
+    "license": "LGPL-3",
+    "depends": ["maintenance"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/sequence.xml",
+        "views/maintenance_equipment_views.xml",
+        "views/maintenance_qr_wizard_views.xml",
+        "report/maintenance_qr_templates.xml",
+        "report/maintenance_qr_report.xml",
+    ],
+    "installable": True,
+    "application": False,
+}

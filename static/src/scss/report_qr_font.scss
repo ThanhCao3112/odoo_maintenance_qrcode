@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'SG3DReportSans';
+    src: local('DejaVu Sans'), local('Noto Sans'), local('Arial Unicode MS');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SG3DReportSans';
+    src: local('DejaVu Sans Bold'), local('Noto Sans Bold'), local('Arial Unicode MS Bold');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.o_report_layout,
+.o_label_sheet,
+.o_label_property_sticker,
+.o_label_property_text,
+.o_label_company_name,
+.o_label_equipment_name {
+    font-family: 'SG3DReportSans', 'DejaVu Sans', 'Noto Sans', 'Arial Unicode MS', Arial, sans-serif !important;
+}
+
+.o_label_asset_code {
+    font-family: 'DejaVu Sans Mono', 'Courier New', monospace !important;
+}

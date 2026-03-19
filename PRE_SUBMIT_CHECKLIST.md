@@ -5,6 +5,7 @@
 - [ ] `__manifest__.py` has correct `name`, `summary`, `version`, `license`, `depends`
 - [ ] Version matches target series (example: `19.0.x.y.z`)
 - [ ] No absolute/local paths in code
+- [ ] No duplicate/legacy files left in package
 
 ## 2) Code Quality
 - [ ] No traceback on install/upgrade
@@ -17,9 +18,10 @@
 - [ ] Create equipment, auto-generate code works
 - [ ] Manual edit code works (manager)
 - [ ] Duplicate code is blocked by unique constraint
-- [ ] Action > Print QR Code works from list and form
+- [ ] `Equipment QR Label` button works from list and form header
 - [ ] All label sizes render correctly in PDF
 - [ ] QR scan opens correct equipment record
+- [ ] Wizard supports `Dymo`, `2x7`, `4x7`, and `Custom`
 
 ## 4) Security & Permissions
 - [ ] Non-manager cannot generate code
@@ -34,11 +36,13 @@
 - [ ] Report has no unwanted invoice-like header/footer
 - [ ] Label content includes code + name (+ category if required)
 - [ ] Fonts and spacing remain readable in print
+- [ ] No obsolete entries appear in Action/Print gear menu
 
 ## 7) Odoo Apps Listing Assets
 - [ ] `README.md` completed
 - [ ] `static/description/index.html` completed and clean
-- [ ] Add real icon/screenshots in `static/description/`
+- [ ] `static/description/icon.(png|jpg|svg)` available
+- [ ] Add real screenshots in `static/description/` (optional but recommended)
 - [ ] App listing text is consistent with actual features
 
 ## 8) Upload Dry Run
