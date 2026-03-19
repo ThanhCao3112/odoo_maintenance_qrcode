@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_maintenance_equipment_form_inherit_qr" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.inherit.qr</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='serial_no']" position="after">
+                <field name="x_equipment_code" groups="maintenance.group_equipment_manager"/>
+                <button
+                    name="action_generate_equipment_code"
+                    string="Generate Code"
+                    type="object"
+                    class="btn-secondary"
+                    groups="maintenance.group_equipment_manager"
+                    invisible="x_equipment_code != False"
+                />
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="QR Code" name="qr_code">
+                    <group>
+                        <field name="x_qr_payload" widget="url" readonly="1"/>
+                        <field name="x_qr_image_html" widget="html" readonly="1" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_maintenance_equipment_tree_inherit_qr" model="ir.ui.view">
+        <field name="name">maintenance.equipment.tree.inherit.qr</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_equipment_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_maintenance_equipment_search_inherit_qr" model="ir.ui.view">
+        <field name="name">maintenance.equipment.search.inherit.qr</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_equipment_code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

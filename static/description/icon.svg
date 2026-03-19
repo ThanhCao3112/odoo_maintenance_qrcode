@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="28" fill="#7c4dff"/>
+  <rect x="26" y="26" width="204" height="204" rx="16" fill="#ffffff"/>
+  <g fill="#7c4dff">
+    <rect x="44" y="44" width="52" height="52" rx="6"/>
+    <rect x="160" y="44" width="52" height="52" rx="6"/>
+    <rect x="44" y="160" width="52" height="52" rx="6"/>
+    <rect x="118" y="118" width="20" height="20"/>
+    <rect x="146" y="118" width="20" height="20"/>
+    <rect x="118" y="146" width="20" height="20"/>
+    <rect x="146" y="146" width="20" height="20"/>
+  </g>
+  <text x="128" y="242" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">QR</text>
+</svg>
