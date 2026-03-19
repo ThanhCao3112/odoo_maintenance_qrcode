@@ -1,66 +1,58 @@
 <section class="oe_container">
-  <div class="oe_row oe_spaced">
+  <div class="oe_row oe_spaced" style="max-width: 980px; margin: 0 auto;">
     <h2 class="oe_slogan">Maintenance QR Code</h2>
-    <h3 class="oe_slogan">Generate, preview, and print QR labels for maintenance equipment</h3>
-    <p>
-      This module extends Odoo Maintenance to provide equipment codes, QR generation,
-      and printable QR labels for fast equipment lookup.
+    <h3 class="oe_slogan">Generate and print QR labels for maintenance equipment</h3>
+    <p class="oe_mt16">
+      <strong>Maintenance QR Code</strong> extends Odoo Maintenance to add internal equipment codes,
+      QR preview, and printable QR labels for fast asset identification and lookup.
     </p>
   </div>
 </section>
 
 <section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <img src="banner.png" alt="Maintenance QR Code Banner" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
-  </div>
-</section>
-
-<section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <h4>Features</h4>
+  <div class="oe_row oe_spaced" style="max-width: 980px; margin: 0 auto;">
+    <h4>Key Features</h4>
     <ul>
-      <li>Auto-generate internal equipment code from sequence</li>
-      <li>Manual code edit for Equipment Manager</li>
-      <li>QR payload opens equipment form directly</li>
-      <li>QR preview in Equipment form</li>
-      <li>Batch print labels from list/form actions</li>
-      <li>Label size presets: A4 (3x8), 50x30 mm, 70x50 mm</li>
+      <li>Auto-generate <strong>Equipment Code</strong> from sequence.</li>
+      <li>Manager-only button to generate missing codes.</li>
+      <li>Unique code validation to avoid duplicates.</li>
+      <li>QR payload opens equipment form directly.</li>
+      <li>QR preview on equipment form.</li>
+      <li>Label print wizard with formats: <strong>Dymo</strong>, <strong>2 x 7</strong>, <strong>4 x 7</strong>, and <strong>Custom Columns</strong>.</li>
+      <li>Configurable label header color.</li>
     </ul>
   </div>
 </section>
 
 <section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <h4>How to use</h4>
+  <div class="oe_row oe_spaced" style="max-width: 980px; margin: 0 auto;">
+    <h4>How It Works</h4>
     <ol>
       <li>Go to <strong>Maintenance &gt; Equipment</strong>.</li>
-      <li>Create equipment or open existing equipment.</li>
-      <li>Generate/Edit <strong>Equipment Code</strong>.</li>
-      <li>Use <strong>Action &gt; Print QR Code</strong>.</li>
-      <li>Choose label size and copies, then print.</li>
+      <li>Create equipment or open an existing record.</li>
+      <li>Generate equipment code if needed.</li>
+      <li>Click <strong>Equipment QR Label</strong> in the equipment view.</li>
+      <li>Select layout and quantity, then print PDF labels.</li>
     </ol>
   </div>
 </section>
 
 <section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <h4>Screenshots</h4>
-    <p>Add your real screenshots in this folder and reference them below:</p>
-    <img src="thumbnail.png" alt="QR Label Thumbnail" style="max-width:100%; border:1px solid #ddd; border-radius:8px;"/>
+  <div class="oe_row oe_spaced" style="max-width: 980px; margin: 0 auto;">
+    <h4>Security</h4>
     <ul>
-      <li><code>static/description/screenshot_equipment_form.png</code></li>
-      <li><code>static/description/screenshot_qr_preview.png</code></li>
-      <li><code>static/description/screenshot_print_wizard.png</code></li>
-      <li><code>static/description/screenshot_label_pdf.png</code></li>
+      <li>Only users in <strong>Equipment Manager</strong> group can generate equipment codes.</li>
+      <li>Standard Maintenance access rights remain unchanged.</li>
     </ul>
   </div>
 </section>
 
 <section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <h4>Technical</h4>
+  <div class="oe_row oe_spaced" style="max-width: 980px; margin: 0 auto;">
+    <h4>Technical Details</h4>
     <ul>
       <li>Technical name: <strong>maintenance_qrcode</strong></li>
+      <li>Odoo version: <strong>19.0</strong></li>
       <li>License: <strong>LGPL-3</strong></li>
       <li>Dependency: <strong>maintenance</strong></li>
     </ul>

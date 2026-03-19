@@ -5,6 +5,18 @@
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button
+                        name="action_open_qr_print_wizard"
+                        string="Equipment QR Label"
+                        type="object"
+                        class="oe_highlight"
+                        icon="fa-print"
+                    />
+                </header>
+            </xpath>
+
             <xpath expr="//field[@name='serial_no']" position="after">
                 <field name="x_equipment_code" groups="maintenance.group_equipment_manager"/>
                 <button
@@ -33,6 +45,17 @@
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <header>
+                    <button
+                        name="action_open_qr_print_wizard"
+                        string="Equipment QR Label"
+                        type="object"
+                        icon="fa-print"
+                        class="oe_highlight"
+                    />
+                </header>
+            </xpath>
             <xpath expr="//field[@name='name']" position="after">
                 <field name="x_equipment_code"/>
             </xpath>

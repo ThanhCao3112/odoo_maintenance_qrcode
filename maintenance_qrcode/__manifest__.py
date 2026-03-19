@@ -9,8 +9,8 @@ Maintenance QR Code
 Features:
 - Auto/manual equipment code for maintenance equipment.
 - QR payload and QR preview on equipment form.
-- Batch print QR labels from list/form actions.
-- Label size presets: A4 3x8, 50x30 mm, 70x50 mm.
+- Print QR labels from equipment form/list header button.
+- Label layouts: Dymo, 2x7, 4x7, and custom columns/rows.
 """,
     "version": "19.0.1.0.0",
     "category": "Supply Chain/Maintenance",
@@ -18,7 +18,6 @@ Features:
     "maintainer": "thanhcao",
     "website": "https://github.com/ThanhCao3112/odoo_maintenance_qrcode",
     "license": "LGPL-3",
-    "images": ["static/description/banner.png"],
     "depends": ["maintenance"],
     "data": [
         "security/ir.model.access.csv",

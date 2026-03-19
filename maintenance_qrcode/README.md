@@ -1,52 +1,69 @@
-# Maintenance QR Code
+# Maintenance QR Code (Odoo 19)
 
-Generate and print QR labels for equipment in Odoo Maintenance.
+Generate and print QR labels for Maintenance Equipment in Odoo.
 
-## Key Features
-- Internal equipment code (`x_equipment_code`) with auto-sequence.
-- Manual edit of equipment code by Equipment Manager.
-- QR payload that opens equipment form directly in Odoo.
-- QR preview tab on equipment form.
-- Batch print labels from list/form actions.
-- Label size presets:
-  - A4 (3x8 labels)
-  - 50x30 mm
-  - 70x50 mm
+## Overview
 
-## Business Flow
-1. Open **Maintenance > Equipment**.
-2. Create equipment or open an existing one.
-3. Generate or manually edit `Equipment Code`.
-4. Use **Action > Print QR Code**.
-5. Select size/copies and print PDF labels.
+This module extends `maintenance.equipment` with:
+
+- Internal equipment code (`x_equipment_code`) generated from sequence.
+- QR payload URL that opens the equipment form directly.
+- QR preview block on equipment form.
+- Label print wizard with multiple layouts.
+
+The module is designed for fast equipment lookup in operations, warehouse, and maintenance teams.
+
+## Main Features
+
+- Auto-generate equipment code per company sequence.
+- Manual code generation button for Equipment Managers.
+- Unique code validation (no duplicate equipment code).
+- QR label wizard from equipment form/list header button.
+- Label layout options:
+  - `Dymo` (single label style)
+  - `2 x 7`
+  - `4 x 7`
+  - `Custom Columns` (user-defined rows/columns)
+- Configurable label header color.
+
+## Usage
+
+1. Go to **Maintenance > Equipment**.
+2. Create/open equipment.
+3. Generate equipment code (manager role) if empty.
+4. Click **Equipment QR Label**.
+5. Select format, quantity, and print PDF.
 
 ## Security
-- Code generation is restricted to `maintenance.group_equipment_manager`.
-- Access to equipment data still follows standard Maintenance ACLs/rules.
 
-## Technical Notes
-- Module: `maintenance_qrcode`
-- Depends on: `maintenance`
-- No external Python package required (uses Odoo barcode/report stack).
+- Code generation is restricted to `maintenance.group_equipment_manager`.
+- Record access follows standard Odoo Maintenance ACL/rules.
+
+## Technical Information
+
+- Technical name: `maintenance_qrcode`
+- Version: `19.0.1.0.0`
+- License: `LGPL-3`
+- Dependency: `maintenance`
+- External Python libraries: none
 
 ## Installation
-1. Copy module folder `maintenance_qrcode` into your custom addons path.
-2. Restart Odoo.
+
+1. Put module folder `maintenance_qrcode` in custom addons path.
+2. Restart Odoo service.
 3. Update Apps list.
-4. Install module **Maintenance QR Code**.
+4. Install **Maintenance QR Code**.
 
 ## Upgrade
-- Apps > search module > **Upgrade**
-- or CLI: `-u maintenance_qrcode`
 
-## Configuration
-- Verify `web.base.url` points to your real server URL so scanned QR opens the correct host.
+- UI: Apps → search `Maintenance QR Code` → **Upgrade**
+- CLI: `odoo -d <db_name> -u maintenance_qrcode`
 
-## Screenshots
-Add screenshots under `static/description/` and reference them in `static/description/index.html`.
+## Notes for Production
+
+- Set `web.base.url` correctly so scanned QR opens the correct host.
+- Validate PDF output with your real printer settings (paper scaling disabled).
 
 ## License
-LGPL-3
 
-## Support
-For support, include your contact details in manifest (`author`, `website`) and on Odoo Apps listing.
+LGPL-3

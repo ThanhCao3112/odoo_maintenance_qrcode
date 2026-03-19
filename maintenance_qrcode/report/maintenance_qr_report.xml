@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="paperformat_maintenance_qr_label_sheet" model="report.paperformat">
+        <field name="name">Maintenance QR A4 Label Sheet</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
     <record id="action_report_maintenance_equipment_qr" model="ir.actions.report">
         <field name="name">Equipment QR Labels</field>
         <field name="model">maintenance.equipment</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_view_types"></field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">maintenance_qrcode.report_maintenance_equipment_qr</field>
         <field name="report_file">maintenance_qrcode.report_maintenance_equipment_qr</field>
-        <field name="binding_model_id" ref="maintenance.model_maintenance_equipment"/>
-        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="maintenance_qrcode.paperformat_maintenance_qr_label_sheet"/>
         <field name="print_report_name">'Equipment QR - %s' % (object.name or '')</field>
+    </record>
+
+    <record id="action_equipment_qr_label_wizard" model="ir.actions.server">
+        <field name="name">Equipment QR Label</field>
+        <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_view_types">form,list,kanban</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_open_qr_print_wizard()</field>
     </record>
 </odoo>
