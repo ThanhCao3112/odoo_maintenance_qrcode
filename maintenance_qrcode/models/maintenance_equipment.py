@@ -9,6 +9,8 @@ from odoo.exceptions import AccessError, UserError
 class MaintenanceEquipment(models.Model):
     _inherit = "maintenance.equipment"
 
+    _MOJIBAKE_MARKERS = ("Ã", "Â", "Ä", "áº", "á»", "Ä‘")
+
     x_equipment_code = fields.Char(
         string="Equipment Code",
         copy=False,
@@ -95,3 +97,23 @@ class MaintenanceEquipment(models.Model):
             "default_equipment_ids": [(6, 0, self.ids)],
         }
         return action
+
+    def _repair_mojibake(self, text):
+        """Best-effort fix for common UTF-8 decoded as latin1 strings in reports."""
+        if not text or not isinstance(text, str):
+            return text
+        if not any(marker in text for marker in self._MOJIBAKE_MARKERS):
+            return text
+        try:
+            repaired = text.encode("latin1").decode("utf-8")
+            return repaired or text
+        except UnicodeError:
+            return text
+
+    def _qr_display_text(self, text):
+        self.ensure_one()
+        return self._repair_mojibake(text)
+
+    def _qr_display_code(self):
+        self.ensure_one()
+        return self.x_equipment_code or self.serial_no or "-"

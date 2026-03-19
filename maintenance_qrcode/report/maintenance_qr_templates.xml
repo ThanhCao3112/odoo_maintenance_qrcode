@@ -6,13 +6,19 @@
             <t t-set="copies" t-value="int((data or {}).get('copies', 1))"/>
 
             <t t-if="label_size == '50x30'">
-                <t t-set="label_style" t-value="'width:50mm;height:30mm;'"/>
+                <t t-set="label_style" t-value="'width:56mm;height:30mm;'"/>
+                <t t-set="qr_size" t-value="19"/>
+                <t t-set="font_size" t-value="9"/>
             </t>
             <t t-elif="label_size == '70x50'">
-                <t t-set="label_style" t-value="'width:70mm;height:50mm;'"/>
+                <t t-set="label_style" t-value="'width:74mm;height:50mm;'"/>
+                <t t-set="qr_size" t-value="24"/>
+                <t t-set="font_size" t-value="10"/>
             </t>
             <t t-else="">
-                <t t-set="label_style" t-value="'width:63.5mm;height:33.9mm;'"/>
+                <t t-set="label_style" t-value="'width:68mm;height:33.9mm;'"/>
+                <t t-set="qr_size" t-value="22"/>
+                <t t-set="font_size" t-value="10"/>
             </t>
 
             <div class="page" style="padding: 0; margin: 0;">
@@ -27,10 +33,12 @@
                         box-sizing: border-box;
                         padding: 2mm;
                         display: flex;
-                        align-items: center;
-                        gap: 2mm;
+                        align-items: flex-start;
+                        gap: 2.2mm;
                         overflow: hidden;
                         page-break-inside: avoid;
+                        border-radius: 2mm;
+                        background: #fff;
                     }
                     .sg3d_qr_label img {
                         width: 22mm;
@@ -45,13 +53,24 @@
                         display: block;
                     }
                     .sg3d_qr_meta {
+                        font-family: "DejaVu Sans", "Noto Sans", "Arial Unicode MS", Arial, sans-serif;
                         font-size: 10px;
-                        line-height: 1.2;
-                        overflow: hidden;
+                        line-height: 1.25;
+                        overflow: visible;
+                        word-break: break-word;
+                        flex: 1 1 auto;
                     }
                     .sg3d_qr_code {
                         font-weight: 700;
-                        margin-bottom: 1mm;
+                        margin-bottom: 1.2mm;
+                        color: #222;
+                    }
+                    .sg3d_qr_name {
+                        font-weight: 600;
+                        color: #111;
+                    }
+                    .sg3d_qr_category {
+                        color: #444;
                     }
                 </style>
 
@@ -61,12 +80,11 @@
                             <div class="sg3d_qr_label" t-att-style="label_style">
                                 <div class="sg3d_qr_code_img">
                                     <div t-field="equipment.x_qr_payload"
-                                         t-options="{'widget': 'barcode', 'symbology': 'QR', 'width': 220, 'height': 220, 'img_style': 'width:22mm;height:22mm;'}"/>
+                                         t-options="{'widget': 'barcode', 'symbology': 'QR', 'width': 220, 'height': 220, 'img_style': 'width:%smm;height:%smm;' % (qr_size, qr_size)}"/>
                                 </div>
-                                <div class="sg3d_qr_meta">
-                                    <div class="sg3d_qr_code" t-esc="equipment.x_equipment_code or '-'"/>
-                                    <div t-esc="equipment.name"/>
-                                    <div t-if="equipment.category_id" t-esc="equipment.category_id.display_name"/>
+                                <div class="sg3d_qr_meta" t-att-style="'font-size:%spx;' % font_size">
+                                    <div class="sg3d_qr_code" t-esc="equipment.x_equipment_code or equipment.serial_no or '-'"/>
+                                    <div class="sg3d_qr_name" t-esc="equipment.name"/>
                                 </div>
                             </div>
                         </t>
